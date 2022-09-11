@@ -7,14 +7,20 @@ export const mockedStationInformation: StationInformationResponse = {
       {
         station_id: "1",
         name: "TestStasjon",
+        lat: 59,
+        lon: 10,
       },
       {
         station_id: "2",
         name: "TestStasjon2",
+        lat: 59,
+        lon: 10,
       },
       {
         station_id: "3",
         name: "TestStasjon3",
+        lat: 59,
+        lon: 10,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { within, render, screen, fireEvent } from "../../test-utils";
+import { render, screen } from "../../test-utils";
 import StasjonStatus from "./StasjonStatus";
 import {
   mockedStationInformation,
@@ -10,7 +10,7 @@ const stationStatuses = mockedStationStatus.data.stations;
 
 describe("StasjonStatus", () => {
   it("shows correct content in a list item", async () => {
-    render(<StasjonStatus station={station} />);
+    render(<StasjonStatus stasjon={station} />);
 
     const status = stationStatuses.find(
       (status) => status.station_id === station.station_id
