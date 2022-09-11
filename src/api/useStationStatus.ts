@@ -10,7 +10,7 @@ export type StationStatusType = {
   num_docks_available: number;
 };
 
-type StationStatusResponse = {
+export type StationStatusResponse = {
   data: { stations: StationStatusType[] };
 };
 

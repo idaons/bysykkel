@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { fetcher } from "./api";
 
-export const stationStatusUrl =
+export const stationInformationUrl =
   "https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json";
 
 export type StationInformationType = {
@@ -9,9 +9,9 @@ export type StationInformationType = {
   name: string;
 };
 
-type StationInformationResponse = {
+export type StationInformationResponse = {
   data: { stations: StationInformationType[] };
 };
 
 export const useStationInformation = () =>
-  useSWR<StationInformationResponse>(stationStatusUrl, fetcher);
+  useSWR<StationInformationResponse>(stationInformationUrl, fetcher);
