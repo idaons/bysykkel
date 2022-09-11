@@ -7,6 +7,7 @@ const nextConfig = {
       displayName: true,
     },
   },
+  pageExtensions: ["page.tsx", "page.ts"],
 };
 
 module.exports = nextConfig;

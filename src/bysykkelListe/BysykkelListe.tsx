@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
-
-import {
-  StationInformationType,
-  useStationInformation,
-} from "../api/useStationInformation";
-import { useStationStatus } from "../api/useStationStatus";
+import React, { useState } from "react";
+import { useStationInformation } from "../api/useStationInformation";
 import StasjonStatus from "../stasjonStatus/StasjonStatus";
 import styled from "styled-components";
+import { headerId } from "../../pages/index.page";
+import { sortStasjoner } from "./listeUtils";
 
 const StyledLabel = styled.label`
   display: block;
@@ -16,45 +13,34 @@ const StyledInput = styled.input`
   margin-bottom: 1.5rem;
 `;
 
-const StyledGrid = styled.div`
+const StyledList = styled.ul`
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
 `;
 
-const StatusWrapper = styled.div`
+const StyledListItem = styled.li`
+  list-style: none;
+  display: inline-block;
   &:not(:last-of-type) {
     padding-bottom: 0.5rem;
 
     margin-bottom: 0.5rem;
   }
 `;
-const StyledStasjonsNavn = styled.h2`
-  color: var(--bysykkel-color);
-  word-wrap: break-word;
-`;
 
 const BysykkelListe = () => {
   const { data: stasjonResponse, error: stasjonError } =
     useStationInformation();
-  const { data: statusResponse, error: statusError } = useStationStatus();
   const [inputValue, setInputValue] = useState("");
-  const sorterteStasjoner = useMemo(
-    () =>
-      stasjonResponse?.data.stations.sort((a, b) => (a.name > b.name ? 1 : -1)),
-    [stasjonResponse]
-  );
+  const sorterteStasjoner = sortStasjoner(stasjonResponse?.data.stations ?? []);
 
-  const [filtrerteStasjoner, setFiltrerteStasjoner] = useState<
-    StationInformationType[] | undefined
-  >(sorterteStasjoner);
-
-  useEffect(() => {
-    const sokeResultat = sorterteStasjoner?.filter((item) =>
-      item.name.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    setFiltrerteStasjoner(sokeResultat);
-  }, [inputValue, sorterteStasjoner]);
+  const filtrerteStasjoner =
+    inputValue.length > 0
+      ? sorterteStasjoner?.filter((item) =>
+          item.name.toLowerCase().includes(inputValue.toLowerCase())
+        )
+      : sorterteStasjoner;
 
   if (stasjonError) {
     return <div>Kunne ikke hente bysykkelstasjoner.. </div>;
@@ -62,7 +48,7 @@ const BysykkelListe = () => {
 
   return (
     <>
-      <StyledLabel htmlFor="sok">Søk etter stativ: </StyledLabel>
+      <StyledLabel htmlFor="sok">Søk etter stativ:</StyledLabel>
       <StyledInput
         type="search"
         id="sok"
@@ -72,24 +58,16 @@ const BysykkelListe = () => {
       <span className="sr-only" aria-live="assertive" aria-atomic="true">
         {filtrerteStasjoner?.length} treff
       </span>
-      <StyledGrid>
-        {filtrerteStasjoner?.map((station) => {
-          const stasjonStatus = statusResponse?.data.stations.find(
-            (it) => it.station_id === station.station_id
-          );
-          return (
-            <StatusWrapper key={station.station_id}>
-              <StyledStasjonsNavn>{station.name}</StyledStasjonsNavn>
-              {statusError && (
-                <div>Klarte ikke hente status for stasjonen..</div>
-              )}
-              {stasjonStatus && <StasjonStatus status={stasjonStatus} />}
-            </StatusWrapper>
-          );
-        })}
-      </StyledGrid>
-      {filtrerteStasjoner?.length === 0 && stasjonResponse !== undefined && (
+      {filtrerteStasjoner?.length === 0 && stasjonResponse !== undefined ? (
         <p>Vi fant ingen stasjoner som matcher søket ditt. </p>
+      ) : (
+        <StyledList aria-labelledby={headerId}>
+          {filtrerteStasjoner?.map((station) => (
+            <StyledListItem key={station.station_id}>
+              <StasjonStatus station={station} />
+            </StyledListItem>
+          ))}
+        </StyledList>
       )}
     </>
   );

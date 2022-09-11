@@ -12,10 +12,12 @@ const StyledHeader = styled.h1`
   padding: 1rem;
 `;
 
+export const headerId = "overskrift_id";
+
 const Home: NextPage = () => {
   return (
     <main>
-      <StyledHeader>Bysykler i Oslo</StyledHeader>
+      <StyledHeader id={headerId}>Bysykler i Oslo</StyledHeader>
 
       <StyledApp>
         <BysykkelListe />
