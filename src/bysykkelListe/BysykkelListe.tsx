@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import { useStationInformation } from "../api/useStationInformation";
+import {
+  StationInformationType,
+  useStationInformation,
+} from "../api/useStationInformation";
 import StasjonStatus from "../stasjonStatus/StasjonStatus";
 import styled from "styled-components";
 import { headerId } from "../../pages/index.page";
 import { sortStasjoner } from "./listeUtils";
+import dynamic from "next/dynamic";
+
+const Kart = dynamic<{ stasjoner: StationInformationType[] }>(
+  () => import("../kart/Kart"),
+  {
+    ssr: false,
+    loading: () => <p>Henter kartvisning..</p>,
+  }
+);
 
 const StyledLabel = styled.label`
   display: block;
@@ -58,13 +70,14 @@ const BysykkelListe = () => {
       <span className="sr-only" aria-live="assertive" aria-atomic="true">
         {filtrerteStasjoner?.length} treff
       </span>
+      <Kart stasjoner={filtrerteStasjoner} />
       {filtrerteStasjoner?.length === 0 && stasjonResponse !== undefined ? (
         <p>Vi fant ingen stasjoner som matcher søket ditt. </p>
       ) : (
         <StyledList aria-labelledby={headerId}>
           {filtrerteStasjoner?.map((station) => (
             <StyledListItem key={station.station_id}>
-              <StasjonStatus station={station} />
+              <StasjonStatus stasjon={station} />
             </StyledListItem>
           ))}
         </StyledList>

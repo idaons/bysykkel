@@ -38,18 +38,26 @@ describe("Utils", () => {
       {
         station_id: "1",
         name: "BB",
+        lat: 59,
+        lon: 10,
       },
       {
         station_id: "2",
         name: "12number",
+        lat: 59,
+        lon: 10,
       },
       {
         station_id: "3",
         name: "bc",
+        lat: 59,
+        lon: 10,
       },
       {
         station_id: "4",
         name: "aa",
+        lat: 59,
+        lon: 10,
       },
     ];
 

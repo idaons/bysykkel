@@ -7,6 +7,8 @@ export const stationInformationUrl =
 export type StationInformationType = {
   station_id: string;
   name: string;
+  lat: number;
+  lon: number;
 };
 
 export type StationInformationResponse = {

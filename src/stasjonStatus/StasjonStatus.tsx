@@ -4,7 +4,7 @@ import React from "react";
 import { StationInformationType } from "../api/useStationInformation";
 
 interface Props {
-  station: StationInformationType;
+  stasjon: StationInformationType;
 }
 
 const StatusWrapper = styled.div`
@@ -22,11 +22,11 @@ const StasjonStatus = (props: Props) => {
   const { data: statusResponse, error: statusError } = useStationStatus();
 
   const stasjonStatus = statusResponse?.data.stations.find(
-    (it) => it.station_id === props.station.station_id
+    (it) => it.station_id === props.stasjon.station_id
   );
   return (
     <>
-      <StyledStasjonsNavn>{props.station.name}</StyledStasjonsNavn>
+      <StyledStasjonsNavn>{props.stasjon.name}</StyledStasjonsNavn>
       {statusError && <div>Klarte ikke hente status for stasjonen..</div>}
       {stasjonStatus && (
         <StatusWrapper>

@@ -18,7 +18,6 @@ const Home: NextPage = () => {
   return (
     <main>
       <StyledHeader id={headerId}>Bysykler i Oslo</StyledHeader>
-
       <StyledApp>
         <BysykkelListe />
       </StyledApp>
