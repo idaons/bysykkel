@@ -6,7 +6,7 @@ Liste over stativer med bysykler i Oslo. Listen viser tilgjengelige sykler og lÃ
 ```bash
 npm install
 ```
-2. Start applikasjonen
+2. Start applikasjonen i development mode
 ```bash
 npm run dev
 ```

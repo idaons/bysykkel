@@ -1,12 +1,5 @@
-import {
-  StationInformationResponse,
-  StationInformationType,
-  stationInformationUrl,
-} from "../src/api/useStationInformation";
-import {
-  StationStatusResponse,
-  stationStatusUrl,
-} from "../src/api/useStationStatus";
+import { stationInformationUrl } from "../src/api/useStationInformation";
+import { stationStatusUrl } from "../src/api/useStationStatus";
 import { rest } from "msw";
 import { mockedStationInformation, mockedStationStatus } from "./mockData";
 

@@ -8,6 +8,7 @@ const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => {
       value={{
         dedupingInterval: 0,
         shouldRetryOnError: false,
+        provider: () => new Map(),
       }}
     >
       {children}
